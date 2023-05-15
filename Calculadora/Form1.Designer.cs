@@ -30,6 +30,7 @@ namespace Calculadora
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.txtArriba = new System.Windows.Forms.TextBox();
             this.txtAbajo = new System.Windows.Forms.TextBox();
             this.btnIgual = new System.Windows.Forms.Button();
             this.btnPunto = new System.Windows.Forms.Button();
@@ -59,7 +60,6 @@ namespace Calculadora
             this.btnH2 = new System.Windows.Forms.Button();
             this.btnH1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtArriba = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -92,6 +92,19 @@ namespace Calculadora
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(513, 480);
             this.panel1.TabIndex = 0;
+            // 
+            // txtArriba
+            // 
+            this.txtArriba.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(42)))), ((int)(((byte)(62)))));
+            this.txtArriba.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtArriba.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtArriba.ForeColor = System.Drawing.SystemColors.InactiveBorder;
+            this.txtArriba.Location = new System.Drawing.Point(22, 61);
+            this.txtArriba.Name = "txtArriba";
+            this.txtArriba.ReadOnly = true;
+            this.txtArriba.Size = new System.Drawing.Size(474, 20);
+            this.txtArriba.TabIndex = 33;
+            this.txtArriba.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // txtAbajo
             // 
@@ -353,6 +366,7 @@ namespace Calculadora
             this.btnBasurero.Size = new System.Drawing.Size(41, 37);
             this.btnBasurero.TabIndex = 7;
             this.btnBasurero.UseVisualStyleBackColor = false;
+            this.btnBasurero.Click += new System.EventHandler(this.btnBasurero_Click);
             // 
             // btnH6
             // 
@@ -363,7 +377,6 @@ namespace Calculadora
             this.btnH6.Name = "btnH6";
             this.btnH6.Size = new System.Drawing.Size(282, 60);
             this.btnH6.TabIndex = 6;
-            this.btnH6.Text = "50+10";
             this.btnH6.UseVisualStyleBackColor = false;
             // 
             // btnH5
@@ -375,7 +388,6 @@ namespace Calculadora
             this.btnH5.Name = "btnH5";
             this.btnH5.Size = new System.Drawing.Size(282, 60);
             this.btnH5.TabIndex = 5;
-            this.btnH5.Text = "50+10";
             this.btnH5.UseVisualStyleBackColor = false;
             // 
             // btnH4
@@ -387,7 +399,6 @@ namespace Calculadora
             this.btnH4.Name = "btnH4";
             this.btnH4.Size = new System.Drawing.Size(282, 60);
             this.btnH4.TabIndex = 4;
-            this.btnH4.Text = "50+10";
             this.btnH4.UseVisualStyleBackColor = false;
             // 
             // btnH3
@@ -399,7 +410,6 @@ namespace Calculadora
             this.btnH3.Name = "btnH3";
             this.btnH3.Size = new System.Drawing.Size(282, 60);
             this.btnH3.TabIndex = 3;
-            this.btnH3.Text = "50+10";
             this.btnH3.UseVisualStyleBackColor = false;
             // 
             // btnH2
@@ -411,7 +421,6 @@ namespace Calculadora
             this.btnH2.Name = "btnH2";
             this.btnH2.Size = new System.Drawing.Size(282, 60);
             this.btnH2.TabIndex = 2;
-            this.btnH2.Text = "50+10";
             this.btnH2.UseVisualStyleBackColor = false;
             // 
             // btnH1
@@ -423,7 +432,6 @@ namespace Calculadora
             this.btnH1.Name = "btnH1";
             this.btnH1.Size = new System.Drawing.Size(282, 60);
             this.btnH1.TabIndex = 1;
-            this.btnH1.Text = "50+10";
             this.btnH1.UseVisualStyleBackColor = false;
             // 
             // label1
@@ -436,19 +444,6 @@ namespace Calculadora
             this.label1.Size = new System.Drawing.Size(95, 25);
             this.label1.TabIndex = 0;
             this.label1.Text = "Historial";
-            // 
-            // txtArriba
-            // 
-            this.txtArriba.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(42)))), ((int)(((byte)(62)))));
-            this.txtArriba.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtArriba.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArriba.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.txtArriba.Location = new System.Drawing.Point(22, 61);
-            this.txtArriba.Name = "txtArriba";
-            this.txtArriba.ReadOnly = true;
-            this.txtArriba.Size = new System.Drawing.Size(474, 20);
-            this.txtArriba.TabIndex = 33;
-            this.txtArriba.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // Form1
             // 

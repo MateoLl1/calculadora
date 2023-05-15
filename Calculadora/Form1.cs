@@ -14,11 +14,14 @@ namespace Calculadora
     public partial class Form1 : Form
     {
         //VARIABLES GLOBALES 
-        public static bool longitudCadena, sobreEscribir = false;
+        public static bool longitudCadena, sobreEscribir = false, igualActivo = false;
         public static double num1, num2, resultado;
         public static int posicion = 1, contadorClickOperadores = 1;// 1:aplasto operadores sino aplasto =
         public static string numero1 = "", numero2 = "";
-        public static string cadena, operador = "";
+        public static string cadena, operadorG = "";
+        public static string guardarUno, guardarDos, guardarRes;
+        public static string []  historial = { "", "", "", "", "", "" };
+        public static bool reiniciar = false;
         public Form1()
         {
 
@@ -97,6 +100,7 @@ namespace Calculadora
         private void clikEnOperadores(string operador)
         {
             numero1 = txtAbajo.Text;
+            operadorG = operador;
             if (operador == "*")
             {
                 txtArriba.Text = numero1 + " " + "*";
@@ -118,11 +122,10 @@ namespace Calculadora
         }
         private void UsuarioNoDaClikenIgual()
         {
-
             if (contadorClickOperadores == 1)
             {
                 int longitud = txtArriba.Text.Length;
-                char operadorAnti = txtArriba.Text[longitud - 1];
+                char operadorAnti = operadorG[0];
                 ///Obtengo num1
                 string temporal = txtArriba.Text.Split(' ')[0];
                 num1 = Convert.ToDouble(temporal);
@@ -154,14 +157,15 @@ namespace Calculadora
                     posicion = 1;
                 }
             }
-            
+
             contadorClickOperadores++;
         }
 
         private void metodoSolucion()
         {
             int longitudArriba = txtArriba.Text.Length;
-            char signo = txtArriba.Text[longitudArriba - 1];
+            //char signo = txtArriba.Text[longitudArriba - 1];
+            char signo = operadorG[0];
             string nub1 = txtArriba.Text.Split(' ')[0];
             string nub2 = txtAbajo.Text;
             double nup1 = Convert.ToDouble(nub1);
@@ -171,25 +175,23 @@ namespace Calculadora
             {
                 res = nup1 * nup2;
                 txtAbajo.Text = Convert.ToString(res);
-                posicion =  1;
-            }else if (signo == '+')
+            }
+            else if (signo == '+')
             {
                 res = nup1 + nup2;
                 txtAbajo.Text = Convert.ToString(res);
-                posicion = 1;
             }
             else if (signo == '/')
             {
                 res = nup1 / nup2;
                 txtAbajo.Text = Convert.ToString(res);
-                posicion = 1;
             }
             else if (signo == '-')
             {
                 res = nup1 - nup2;
                 txtAbajo.Text = Convert.ToString(res);
-                posicion = 1;
             }
+            posicion = 1;
         }
         private void btnUno_Click(object sender, EventArgs e)
         {
@@ -476,66 +478,229 @@ namespace Calculadora
             }
         }
 
-        private void btnIgual_Click(object sender, EventArgs e)
+        private void guardarHistorial(string num1, string num2, string res)
         {
 
+            ///Busco saber cuales estan llenos o vacion
+            int numeroVacios = 0;
+            
+            for (int i = 0; i <= 5; i++)
+            {
+                if (historial[i] == "")
+                {
+                    numeroVacios++;
+                }
+                
+            }
+
+            ///CON NUMEROVACIOS DETERMINO DONDE GUARDAR
+            if (numeroVacios == 6)
+            {
+                btnH1.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                historial[0] = "x";
+            }
+            if (numeroVacios == 5)
+            {
+                btnH2.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                historial[1] = "x";
+            }
+            if (numeroVacios == 4)
+            {
+                btnH3.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                historial[2] = "x";
+            }
+            if (numeroVacios == 3)
+            {
+                btnH4.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                historial[3] = "x";
+            }
+            if (numeroVacios == 2)
+            {
+                btnH5.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                historial[4] = "x";
+            }
+            if (numeroVacios == 1)
+            {
+                btnH6.Text = num1 + " " + operadorG + " " + num2 + " = " + res;
+                ///EMPIEZO A REESCRIBIR EL HISTORIAL
+                historial[0] = "";
+                historial[1] = "";
+                historial[2] = "";
+                historial[3] = "";
+                historial[4] = "";
+                historial[5] = "";
+            }
+           
+        }
+        private string traerHistorial()
+        {
+            return "awd";
+        }
+
+        private void btnBasurero_Click(object sender, EventArgs e)
+        {
+            btnH1.Text = "";
+            btnH2.Text = "";
+            btnH3.Text = "";
+            btnH4.Text = "";
+            btnH5.Text = "";
+            btnH6.Text = "";
+            historial[0] = "";
+            historial[1] = "";
+            historial[2] = "";
+            historial[3] = "";
+            historial[4] = "";
+            historial[5] = "";
+        }
+
+        private void metodoIgual()
+        {
+            
+            string resul;
+            
+            if (igualActivo==true)
+            {
+                txtArriba.Text = Convert.ToString(num1) + " " +operadorG;
+                num1 = Convert.ToDouble(txtArriba.Text.Split(' ')[0]);
+                num2 = Convert.ToDouble(txtAbajo.Text);
+            }
+            else
+            {
+                numero1 = txtArriba.Text.Split(' ')[0];
+                numero2 = txtAbajo.Text;
+                num1 = Convert.ToDouble(numero1);
+                num2 = Convert.ToDouble(numero2);
+            }
+            guardarUno = Convert.ToString(num1);
+            if (operadorG == "+")
+            {
+                txtArriba.Text = resul = $"{num1} + {num2}";
+                num1 = num1 + num2;
+                txtAbajo.Text = Convert.ToString(num1);
+            }
+            else if (operadorG == "-")
+            {
+                txtArriba.Text = resul = $"{num1} - {num2}";
+                num1 = num1 - num2;
+                txtAbajo.Text = Convert.ToString(num1);
+            }
+            else if (operadorG == "/")
+            {
+                txtArriba.Text = resul = $"{num1} / {num2}";
+                num1 = num1 / num2;
+                txtAbajo.Text = Convert.ToString(num1);
+            }
+            else if (operadorG == "*")
+            {
+                txtArriba.Text = resul = $"{num1} * {num2}";
+                num1 = num1 * num2;
+                txtAbajo.Text = Convert.ToString(num1);
+            }
+            guardarRes = Convert.ToString(num1);
+            guardarDos = Convert.ToString(num2);
+            guardarHistorial(guardarUno,guardarDos,guardarRes);
+            sobreEscribir = true;
+            igualActivo = true;
+        }
+        private void btnIgual_Click(object sender, EventArgs e)
+        {
+            metodoIgual();
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
+            cadena = txtAbajo.Text;
+            txtAbajo.Text = EliminarUltimoCaracter(cadena);
         }
 
         private void btnMultiplicacion_Click(object sender, EventArgs e)
         {
-            if (posicion == 2)
+            operadorG = "*";
+            if (igualActivo == true)
             {
-                UsuarioNoDaClikenIgual();
+                metodoIgual();
             }
-            if (posicion == 2 && contadorClickOperadores>1)
+            else
             {
-                metodoSolucion();
+
+                if (posicion == 2)
+                {
+                    UsuarioNoDaClikenIgual();
+                }
+                if (posicion == 2 && contadorClickOperadores > 1)
+                {
+                    metodoSolucion();
+                }
+                clikEnOperadores("*");
             }
-            clikEnOperadores("*");
+
         }
 
         private void btnDivision_Click(object sender, EventArgs e)
         {
-            if (posicion == 2)
+            operadorG = "/";
+            if (igualActivo == true)
             {
-                UsuarioNoDaClikenIgual();
+                metodoIgual();
             }
-            if (posicion == 2 && contadorClickOperadores > 1)
+            else
             {
-                metodoSolucion();
+
+                if (posicion == 2)
+                {
+                    UsuarioNoDaClikenIgual();
+                }
+                if (posicion == 2 && contadorClickOperadores > 1)
+                {
+                    metodoSolucion();
+                }
+                clikEnOperadores("/");
             }
-            clikEnOperadores("/");
+
         }
 
         private void btnResta_Click(object sender, EventArgs e)
         {
-            if (posicion == 2)
+            operadorG = "-";
+            if (igualActivo == true)
             {
-                UsuarioNoDaClikenIgual();
+                metodoIgual();
             }
-            if (posicion == 2 && contadorClickOperadores > 1)
+            else
             {
-                metodoSolucion();
+
+                if (posicion == 2)
+                {
+                    UsuarioNoDaClikenIgual();
+                }
+                if (posicion == 2 && contadorClickOperadores > 1)
+                {
+                    metodoSolucion();
+                }
+                clikEnOperadores("-");
             }
-            clikEnOperadores("-");
         }
 
         private void btnSuma_Click(object sender, EventArgs e)
         {
-            if (posicion == 2)
+            operadorG = "+";
+            if (igualActivo == true)
             {
-                UsuarioNoDaClikenIgual();
+                metodoIgual();
             }
-            if (posicion == 2 && contadorClickOperadores > 1)
+            else
             {
-                metodoSolucion();
+
+                if (posicion == 2)
+                {
+                    UsuarioNoDaClikenIgual();
+                }
+                if (posicion == 2 && contadorClickOperadores > 1)
+                {
+                    metodoSolucion();
+                }
+                clikEnOperadores("+");
             }
-            clikEnOperadores("+");
         }
 
         private void btnC_Click(object sender, EventArgs e)
@@ -543,6 +708,22 @@ namespace Calculadora
             txtAbajo.Text = "0";
             txtArriba.Text = "";
             posicion = 1;
+            igualActivo = false;
         }
+
+        public string EliminarUltimoCaracter(string cadena)
+        {
+            if (cadena.Length == 0)
+            {
+                // Si la cadena está vacía, no se puede eliminar ningún carácter
+                return cadena;
+            }
+            else
+            {
+                // Eliminar el último carácter de la cadena
+                return cadena.Remove(cadena.Length - 1, 1);
+            }
+        }
+
     }
 }
